@@ -1,0 +1,5 @@
+
+  <select [ngModel]="selectedRole" (ngModelChange)="onChange($event)" name="sel2">
+    <option [value]="i" *ngFor="let i of role">{{i}}</option>
+</select>
+<app-register [item]= "selectedRole"></app-register>

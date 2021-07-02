@@ -1,0 +1,35 @@
+<div class="global-container">
+	<div class="card login-form">
+	<div class="card-body">
+		<h3 class="card-title text-center">Log in to Codepen</h3>
+		<div class="card-text">
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+        <label for="username">Username</label>
+        <input type="email" formControlName="username" class="form-control form-control-sm" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" placeholder="Enter Email"/>
+        <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+            <div *ngIf="f.username.errors.required">Username is required</div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" formControlName="password"  class="form-control form-control-sm" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" placeholder="Enter Password" />
+        <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+            <div *ngIf="f.password.errors.required">Password is required</div>
+        </div>
+    </div>
+    <div class="form-group">
+        <button  class="btn btn-primary">
+            
+            Login
+        </button>
+        <!-- <a routerLink="/signup" class="btn btn-link">Register</a> -->
+    </div>
+    <div class="sign-up">
+        Don't have an account? <a href="/role">Create One</a>
+    </div>
+</form>
+		</div>
+	</div>
+</div>
+</div>
