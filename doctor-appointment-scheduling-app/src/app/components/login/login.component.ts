@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {  AuthenticationService } from '../../services/authentication.service';
 import{AlertService} from '../../services/alert.service'
 import { FormBuilder,FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router,NavigationExtras, Params, } from '@angular/router';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -13,6 +14,7 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup | any;
   submitted = false;
   returnUrl: string | any;
+  res:any;
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
@@ -45,7 +47,38 @@ export class LoginComponent implements OnInit {
         .subscribe(
             data => {
                 // this.router.navigate([this.returnUrl]);
-                console.log(data)
+                this.res = data;
+               if(this.res.success == true)
+               {
+
+                if(this.res.role == "doctor")
+                {
+                  console.log("id at login",this.res['data'][0].doctor_id)
+                  let navigationExtras: NavigationExtras = {
+                        queryParams: {'id': this.res['data'][0].doctor_id}        
+                   };
+                   this.router.navigate(['/doctor'], navigationExtras);
+                       
+              }
+              if(this.res.role == "patient")
+                {
+                  console.log("id at login",this.res['data'][0].patient_id)
+                  let navigationExtras: NavigationExtras = {
+                        queryParams: {'id': this.res['data'][0].patient_id}        
+                   };
+                   this.router.navigate(['/patient'], navigationExtras);
+                       
+              }
+              if(this.res.role == "admin")
+              {
+                console.log("id at login",this.res['data'][0].admin_id)
+                let navigationExtras: NavigationExtras = {
+                      queryParams: {'id': this.res['data'][0].admin_id}        
+                 };
+                 this.router.navigate(['/admin'], navigationExtras);
+                     
+            }
+              }
             },
             error => {
                 this.alertService.error(error);

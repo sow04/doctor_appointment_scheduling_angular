@@ -1,0 +1,176 @@
+<body class="fixed-nav sticky-footer bg-dark" id="page-top">
+    <!-- Navigation-->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+      <a class="navbar-brand" href="index.html">Patient</a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
+          <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
+            <a class="nav-link"  (click)= "onClickAppointment()">
+              <i class="fa fa-fw fa-dashboard"></i>
+              <span class="nav-link-text">Book Appointment</span>
+            </a>
+          </li>
+          <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
+            <a class="nav-link" (click)= "onClickSelf()">
+              <i class="fa fa-fw fa-calendar"></i>
+              <span class="nav-link-text">My Appointment</span>
+            </a>
+          </li>
+        </ul>
+        <ul class="navbar-nav sidenav-toggler">
+          <li class="nav-item">
+            <a class="nav-link text-center" id="sidenavToggler">
+              <i class="fa fa-fw fa-angle-left"></i>
+            </a>
+          </li>
+        </ul>
+        <ul class="navbar-nav ml-auto"> 
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
+              <i class="fa fa-fw fa-sign-out"></i>Logout</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <div class="content-wrapper">
+      <div class="container-fluid">
+        <!-- Breadcrumbs-->
+        <ol class="breadcrumb">
+          <!-- <li class="breadcrumb-item">
+            <a href="#">Dashboard</a>
+          </li> -->
+          <li class="breadcrumb-item active">My Dashboard</li>
+        </ol>
+        
+       
+        <!-- Example DataTables Card-->
+        <div class="card mb-3">
+          <div class="card-header">
+            <i class="fa fa-table"></i> My Appointment List
+            <!-- <i class="fa fa-plus-circle float-right m-2" (click)="open(mymodal)" aria-hidden="true"></i> -->
+          </div>
+          
+          <div class="card-body">
+            <div class="table-responsive">
+              <table datatable [dtOptions]="dtOptions"  class="row-border hover" width="100%" cellspacing="0">
+                <thead>
+                  <tr>
+                    <th>Appointment No</th>
+                    <th>Doctor Name</th>
+                    <th>Appointment Date</th>
+                    <th>Appointment Time</th>
+                    <th>Appointment Day</th>
+                    <th>Available Status</th>
+                    <th>Download</th>
+                    
+                  </tr>
+                </thead>
+                <tfoot>
+                  <tr>
+                    <th>Appointment No</th>
+                    <th>Doctor Name</th>
+                    <th>Appointment Date</th>
+                    <th>Appointment Time</th>
+                    <th>Appointment Day</th>
+                    <th>Available Status</th>
+                    <th>Download</th>
+                  </tr>
+                </tfoot>
+                <tbody>
+                   <tr *ngFor="let t of tableArray;let i=index;">
+                    <td>{{t.appointment_number}}</td>
+                    <td>{{t.doctor_name}}</td>
+                    <td>{{t.doctor_schedule_date}}</td>
+                    <td>{{t.appointment_time}}</td>
+                    <td>{{t.doctor_schedule_day}}</td>
+                    <td><span  [ngClass]="{'primary': t.status == 'In process','success':t.status == 'Completed'}" class="badge badge-warning">{{t.status}}</span></td>
+                    <td><button class="btn-danger" (click)="open(mymodal)" (click)="book(t,i)">PDF</button> </td>
+                  </tr> 
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+        </div>
+      </div>
+      <!-- /.container-fluid-->
+      <!-- /.content-wrapper-->
+      <footer class="sticky-footer">
+        <div class="container">
+          <div class="text-center">
+            <small>Copyright © Your Website 2018</small>
+          </div>
+        </div>
+      </footer>
+      <!-- Scroll to Top Button-->
+      <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fa fa-angle-up"></i>
+      </a>
+      <!-- Logout Modal-->
+      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+              <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+            <div class="modal-footer">
+              <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+              <a class="btn btn-primary" href="">Logout</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <ng-template #mymodal let-modal >
+     
+      <div  class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Booking Details </h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div> 
+      <div id="htmlData">
+        <div class="card-body">
+      <h5 class="card-title">Apollo Hospital</h5></div>
+      <div class="card">
+            <div class="card ">
+                <div class="card-header text-center">
+                    Patient Details
+                  </div>
+                  <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><span style="padding-right: 10px; font-weight: bold;">Patient Name:</span>{{patient_name}}</li>
+                    <li class="list-group-item"><span style="padding-right: 10px; font-weight: bold;">Contact NO:</span>{{contact_no}}</li>
+                    <li class="list-group-item"><span style="padding-right: 10px; font-weight: bold;">Address:</span>{{address}}</li>
+                  </ul>
+                
+              </div>
+              <div class="card ">
+                <div class="card-header text-center">
+                    Appointment Details 
+                  </div>
+                  <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><span style="padding-right: 10px; font-weight: bold;">Appointment No:</span>{{Appointment_no}}</li>
+                    <li class="list-group-item"><span style="padding-right: 10px; font-weight: bold;">Appointment Date:</span>{{Appointment_date}}</li>
+                    <li class="list-group-item"><span style="padding-right: 10px; font-weight: bold;">Appointment Day:</span>{{Appointment_day}}</li>
+                    <li class="list-group-item"><span style="padding-right: 10px; font-weight: bold;">AppointmentTime:</span>{{Appointment_time}}</li>
+                    <li class="list-group-item"><span style="padding-right: 10px; font-weight: bold;">Reason for Appointment:</span>{{reason}}</li>
+                    <li class="list-group-item"><span style="padding-right: 10px; font-weight: bold;">Doctor Comment:</span>{{comment}}</li>
+                  </ul>
+                
+              </div>
+      </div>
+    </div>
+      <button type="submit"  (click)="SavePDF()" class="btn btn-primary">PDF</button>
+      <div class="modal-footer">
+        <button type = "button"  class="btn btn-outline-dark" (click)="modal.close('Save click')">close</button>
+      </div>
+    </ng-template> 
+  </body>

@@ -1,5 +1,17 @@
 
-  <select [ngModel]="selectedRole" (ngModelChange)="onChange($event)" name="sel2">
-    <option [value]="i" *ngFor="let i of role">{{i}}</option>
-</select>
-<app-register [item]= "selectedRole"></app-register>
+
+
+<div class="card mt-5 mb-3">
+  <div class="card-header">
+    <i class="fa fa-user"></i> Choose a Role</div>
+  <div class="card-body">
+    <select  [ngModel]="selectedRole" (ngModelChange)="onChange($event)" class="form-select" aria-label="Default select example">
+      
+      <option value="doctor">Doctor</option>
+      <option value="patient">Patient</option>
+    </select>
+    </div>
+    <app-register [item]= "selectedRole"></app-register>
+
+  </div>
+  

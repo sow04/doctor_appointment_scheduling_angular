@@ -3,6 +3,7 @@ import { FormGroup,FormBuilder, Validators } from "@angular/forms";
 import {  AuthenticationService } from '../../services/authentication.service';
 import{AlertService} from '../../services/alert.service'
 import { UserService } from 'src/app/services/auth/user.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -12,12 +13,12 @@ export class RegisterComponent implements OnInit {
    @Input() item :any;
   registerForm :FormGroup | any;
   PatientForm :FormGroup | any;
-  router: any;
   data: any;
   constructor(private formBuilder: FormBuilder,
               private authenticationService: AuthenticationService,
               private alertService: AlertService,
-              private userService: UserService) {
+              private userService: UserService,
+              private router: Router) {
                 
                }
    
